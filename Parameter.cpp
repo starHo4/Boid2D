@@ -1,3 +1,3 @@
 #include "Parameter.hpp"
 
-Parameter::N = 50;
+int Parameter::N = 50;
