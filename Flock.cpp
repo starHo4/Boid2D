@@ -29,3 +29,7 @@ void Flock::Update()
         boid->Update();
     }
 }
+
+void Flock::CalcDistMat(){
+
+}

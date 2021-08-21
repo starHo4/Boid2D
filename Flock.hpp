@@ -2,11 +2,13 @@
 #define __Flock__
 
 #include <list>
+#include <vector>
 #include "Boid.hpp"
 using namespace std;
 
 typedef list<Boid> List;
 typedef List::iterator Itr;
+typedef vector<vector<double>> Mat;
 
 class Flock
 {
@@ -16,6 +18,9 @@ private:
     int Size;
 
 public:
+    // Matrix of Distance.
+    Mat MatDist;
+
     // Constructor
     Flock();
     // Getters
@@ -25,6 +30,7 @@ public:
 
     // Function
     void Update();
+    void CalcDistMat();
 }
 
 #endif
