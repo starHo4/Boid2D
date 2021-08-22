@@ -1,4 +1,4 @@
-OBJS = main.o GLScene.o PVector.o
+OBJS = main.o GLScene.o Parameter.o PVector.o
 CC = g++
 FRAMEWORK = -framework OpenGL -framework GLUT
 STD = -std=c++11
@@ -11,6 +11,8 @@ main.o : main.cpp
 	$(CC) -c main.cpp
 GLScene.o : GLScene.hpp GLScene.cpp
 	$(CC) -c GLScene.cpp
+Parameter.o : Parameter.hpp Parameter.cpp
+	$(CC) -c Parameter.cpp
 PVector.o : PVector.hpp PVector.cpp
 	$(CC) -c PVector.cpp
 clean :
