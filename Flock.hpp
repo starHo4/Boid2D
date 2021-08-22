@@ -31,6 +31,6 @@ public:
     // Function
     void Update();
     void CalcDistMat();
-}
+};
 
 #endif
