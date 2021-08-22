@@ -1,31 +1,31 @@
 #ifndef __Flock__
 #define __Flock__
 
-#include <list>
 #include <vector>
 #include "Boid.hpp"
+#include "Parameter.hpp"
 using namespace std;
 
-typedef list<Boid> List;
-typedef List::iterator Itr;
+typedef vector<Boid> Array;
+typedef Array::iterator Itr;
 typedef vector<vector<double>> Mat;
 
 class Flock
 {
 private:
     Itr Itr_b;
-    List Boids;
+    Array Boids;
     int Size;
 
 public:
     // Matrix of Distance.
-    Mat MatDist;
+    Mat DistMat;
 
     // Constructor
     Flock();
     // Getters
     Itr GetItr();
-    List GetBoids();
+    Array GetBoids();
     int GetSize();
 
     // Function
