@@ -27,6 +27,9 @@ void GLScene(int x, int y, int argc, char *argv[])
 
 void Display()
 {
+    glClear(GL_COLOR_BUFFER_BIT);
+    Render();
+    glutSwapBuffers();
 }
 
 void Keyboard(unsigned char key, int x, int y)
@@ -48,9 +51,18 @@ void Reshape(int w, int h)
     {
         h = 1;
     }
+    glViewport(0, 0, w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(-w, w, -h, h, -1.0, 1.0);
 }
 
 void Update(int val)
 {
+    glutPostRedisplay();
     glutTimerFunc(1000 / FPS, Update, val);
+}
+
+void Render()
+{
 }
