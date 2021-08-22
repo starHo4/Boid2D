@@ -8,12 +8,10 @@ void GLScene(int argc, char *argv[])
 
 void GLScene(int x, int y, int argc, char *argv[])
 {
-    int tmp = 794;
-
     glutInit(&argc, argv);
 
     glutInitWindowPosition(0, 0);
-    glutInitWindowSize(tmp, tmp);
+    glutInitWindowSize(P.window_width, P.window_height);
 
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 

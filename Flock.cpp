@@ -4,7 +4,7 @@
 Flock::Flock(Parameter &P)
 {
     Size = P.N;
-    Boids = Array(Size, Boids(0));
+    Boids = Array(Size, Boids(0, P));
     for (int i = 0; i < Size; i++)
     {
         Boids[i].SetId(i);

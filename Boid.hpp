@@ -2,6 +2,7 @@
 #define __Boid__
 
 #include "Flock.hpp"
+#include "GLScene.hpp"
 #include "Parameter.hpp"
 #include "PVector.hpp"
 

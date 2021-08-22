@@ -4,11 +4,15 @@
 #include <iostream>
 #include <cmath>
 #include <GLUT/glut.h>
+#include "Flock.hpp"
+#include "Parameter.hpp"
 
 using namespace std;
 
 #define FPS 50
 #define PI M_PI
+
+extern Parameter P;
 
 void GLScene(int argc, char *argv[]);
 void GLScene(int x, int y, int argc, char *argv[]);
