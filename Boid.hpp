@@ -1,6 +1,8 @@
 #ifndef __Boid__
 #define __Boid__
 
+#include "Flock.hpp"
+#include "Parameter.hpp"
 #include "PVector.hpp"
 
 class Boid
@@ -12,7 +14,7 @@ private:
 
 public:
     // Constructor //
-    Boid(int index);
+    Boid(int index, Parameter &P);
     // Getters //
     PVector GetPos();
     PVector GetDir();
@@ -22,6 +24,7 @@ public:
     void SetPos(PVector u);
     void SetDir(double x, double y);
     void SetDir(PVector u);
+    void SetId(int val);
 
     // Function
     void Update();

@@ -1,7 +1,7 @@
 #include "Boid.hpp"
 
 // Constructor
-Boid::Boid(int index)
+Boid::Boid(int index, Parameter &P)
 {
     id = index;
 }
@@ -43,6 +43,12 @@ void Boid::SetDir(PVector u)
     dir = u;
 }
 
-void Boid::Update(){
-    
+void Boid::SetId(int val)
+{
+    id = val;
+}
+
+// Function
+void Boid::Update()
+{
 }
