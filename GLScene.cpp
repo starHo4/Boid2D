@@ -23,6 +23,8 @@ void GLScene(int x, int y, int argc, char *argv[])
     glutKeyboardFunc(Keyboard);
     glutReshapeFunc(Reshape);
     glutTimerFunc(1000 / FPS, Update, 0);
+
+    Init();
 }
 
 void Display()
@@ -54,7 +56,7 @@ void Reshape(int w, int h)
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-w, w, -h, h, -1.0, 1.0);
+    glOrtho(-5, 5, -5, 5, -1.0, 1.0);
 }
 
 void Update(int val)
@@ -63,6 +65,21 @@ void Update(int val)
     glutTimerFunc(1000 / FPS, Update, val);
 }
 
+void Init()
+{
+    glShadeModel(GL_SMOOTH);
+    glClearColor((double)255 / 255, (double)240 / 255, (double)237 / 255, 1);
+}
+
 void Render()
 {
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    glBegin(GL_POLYGON);
+    glColor3d((double)214/255, (double)29/255, 0);
+    glVertex2d(-cos(72.0 / 180 * PI), -sin(72.0 / 180 * PI) / 2);
+    glVertex2d(cos(72.0 / 180 * PI), -sin(72.0 / 180 * PI) / 2);
+    glVertex2d(0, sin(72.0 / 180 * PI) / 2);
+    glEnd();
 }
