@@ -1,5 +1,9 @@
 #include "GLScene.hpp"
 
+// Global parameter struct, 'Paramater P'.
+Parameter P;
+Flock *flock;
+
 void GLScene(int argc, char *argv[])
 {
     int tmp = 0;
@@ -54,17 +58,20 @@ void Reshape(int w, int h)
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-5, 5, -5, 5, -1.0, 1.0);
+    glOrtho(-P.R, P.R, -P.R, P.R, -1.0, 1.0);
 }
 
 void Update(int val)
 {
+    flock->Update();
     glutPostRedisplay();
     glutTimerFunc(1000 / FPS, Update, val);
 }
 
 void Init()
 {
+    flock = new Flock(P);
+
     glShadeModel(GL_SMOOTH);
     glClearColor((double)255 / 255, (double)240 / 255, (double)237 / 255, 1);
 }
@@ -74,10 +81,24 @@ void Render()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    glBegin(GL_POLYGON);
-    glColor3d((double)214/255, (double)29/255, 0);
-    glVertex2d(-cos(72.0 / 180 * PI), -sin(72.0 / 180 * PI) / 2);
-    glVertex2d(cos(72.0 / 180 * PI), -sin(72.0 / 180 * PI) / 2);
-    glVertex2d(0, sin(72.0 / 180 * PI) / 2);
-    glEnd();
+    for (int i = 0; i < P.N; i++)
+    {
+        glPushMatrix();
+
+        Boid b = flock->GetBoids()[i];
+
+        glTranslated(b.GetPos().x, b.GetPos().y, 0);
+        glRotated(b.GetAngle() / PI * 180 - 90, 0, 0, 1);
+
+        double s = b.GetSize();
+
+        glBegin(GL_POLYGON);
+        glColor3d((double)214 / 255, (double)29 / 255, 0);
+        glVertex2d(-cos(72.0 / 180 * PI) * s, -sin(72.0 / 180 * PI) / 2 * s);
+        glVertex2d(cos(72.0 / 180 * PI) * s, -sin(72.0 / 180 * PI) / 2 * s);
+        glVertex2d(0 * s, sin(72.0 / 180 * PI) / 2 * s);
+        glEnd();
+
+        glPopMatrix();
+    }
 }

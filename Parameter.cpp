@@ -1,11 +1,14 @@
 #include "Parameter.hpp"
 
-int Parameter::N = 50;
-double Parameter::w_r = 1;
-double Parameter::w_a = 1;
-double Parameter::w_c = 1;
+mt19937_64 Parameter::mt(Parameter::RANDOM_SEED);
 
-int Parameter::window_width = 1000;
+int Parameter::N = 30;
+double Parameter::Size = 5.0;
+double Parameter::W_r = 1;
+double Parameter::W_a = 1;
+double Parameter::W_c = 1;
+
+int Parameter::window_width = 794;
 int Parameter::window_height = 794;
 
 double Parameter::R = 200;

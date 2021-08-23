@@ -1,7 +1,7 @@
 #include "Boid.hpp"
 
 // Constructor
-Boid::Boid(int index, Parameter &P)
+Boid::Boid(int index)
 {
     id = index;
 }
@@ -15,6 +15,16 @@ PVector Boid::GetPos()
 PVector Boid::GetDir()
 {
     return dir;
+}
+
+double Boid::GetAngle()
+{
+    return angle;
+}
+
+double Boid::GetSize()
+{
+    return size;
 }
 
 int Boid::GetId()
@@ -43,6 +53,16 @@ void Boid::SetDir(PVector u)
     dir = u;
 }
 
+void Boid::SetAngle(double a)
+{
+    angle = a;
+}
+
+void Boid::SetSize(double s)
+{
+    size = s;
+}
+
 void Boid::SetId(int val)
 {
     id = val;
@@ -51,4 +71,5 @@ void Boid::SetId(int val)
 // Function
 void Boid::Update()
 {
+    pos = Add(pos, dir);
 }

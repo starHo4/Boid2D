@@ -4,10 +4,21 @@
 Flock::Flock(Parameter &P)
 {
     Size = P.N;
-    Boids = Array(Size, Boids(0, P));
+    Boids = Array(Size, Boid(0));
     for (int i = 0; i < Size; i++)
     {
+        // Set id of each boid.
         Boids[i].SetId(i);
+        // Set size of each boid.
+        Boids[i].SetSize(P.Size);
+        // Set position of each boid.
+        uniform_real_distribution<double> udd_R(-P.R, P.R);
+        Boids[i].SetPos(udd_R(P.mt), udd_R(P.mt));
+        // Set direction of each boid.
+        uniform_real_distribution<double> udd_PI(-PI, PI);
+        double a = udd_PI(P.mt);
+        Boids[i].SetAngle(a);
+        Boids[i].SetDir(cos(a), sin(a));
     }
     DistMat = Mat(Size, vector<double>(Size, 0));
 }
