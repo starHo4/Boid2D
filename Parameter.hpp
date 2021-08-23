@@ -12,6 +12,8 @@ struct Parameter{
     // For Boids
     static int N;
     static double Size;
+    static double Speed;
+    static double Radius;
     static double W_r;  // weight for repulsion
     static double W_a;  // weight for cohesion
     static double W_c;  // weight for alighment

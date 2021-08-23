@@ -39,6 +39,12 @@ PVector Normalize(PVector u)
 {
     double norm = Norm(u);
     PVector v;
+    if (norm == 0)
+    {
+        v.x = 0;
+        v.y = 0;
+        return v;
+    }
     v.x = u.x / norm;
     v.y = u.y / norm;
     return v;

@@ -9,6 +9,8 @@ using namespace std;
 
 #define PI M_PI
 
+class Boid;
+
 typedef vector<Boid> Array;
 typedef Array::iterator Itr;
 typedef vector<vector<double>> Mat;

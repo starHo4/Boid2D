@@ -19,8 +19,13 @@ Flock::Flock(Parameter &P)
         double a = udd_PI(P.mt);
         Boids[i].SetAngle(a);
         Boids[i].SetDir(cos(a), sin(a));
+        // Set speed of each boid.
+        Boids[i].SetSpeed(P.Speed);
+        // Set radius of each boid.
+        Boids[i].SetRadius(P.Radius);
     }
     DistMat = Mat(Size, vector<double>(Size, 0));
+    CalcDistMat();
 }
 
 // Getters
@@ -41,10 +46,11 @@ int Flock::GetSize()
 
 void Flock::Update()
 {
+    CalcDistMat();
     for (Itr_b = Boids.begin(); Itr_b != Boids.end(); Itr_b++)
     {
         Boid *boid = &(*Itr_b);
-        boid->Update();
+        boid->Update(DistMat, Boids);
     }
 }
 
@@ -55,6 +61,7 @@ void Flock::CalcDistMat()
         for (int j = i + 1; j < Size; j++)
         {
             DistMat[i][j] = Dist(Boids[i].GetPos(), Boids[j].GetPos());
+            DistMat[j][i] = DistMat[i][j];
         }
     }
 }

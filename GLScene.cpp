@@ -58,7 +58,7 @@ void Reshape(int w, int h)
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-P.R, P.R, -P.R, P.R, -1.0, 1.0);
+    glOrtho(-w, w, -h, h, -1.0, 1.0);
 }
 
 void Update(int val)
