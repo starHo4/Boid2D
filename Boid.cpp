@@ -91,16 +91,27 @@ void Boid::SetId(int val)
 // Function
 void Boid::Update(Mat &DistMat, Array &Boids)
 {
+    PVector new_dir = NullVector();
+
     PVector rpl = Repulsion(DistMat, Boids);
     PVector ali = Alignment(DistMat, Boids);
     PVector coh = Cohesion(DistMat, Boids);
 
-    dir = ali;
-    dir = Add(dir, rpl);
-    dir = Add(dir, coh);
-    dir = Normalize(dir);
-    dir = Mult(dir, speed);
-    pos = Add(pos, dir);
+    // if (id == 0)
+    // {
+    //     cout << rpl.x << " " << rpl.y << endl;
+    //     cout << ali.x << " " << ali.y << endl;
+    //     cout << coh.x << " " << coh.y << endl;
+    //     cout << endl;
+    // }
+
+    new_dir = Add(dir, rpl);
+    new_dir = Add(dir, ali);
+    new_dir = Add(dir, coh);
+    new_dir = Normalize(new_dir);
+    dir = new_dir;
+    PVector tmp = Mult(dir, speed);
+    pos = Add(pos, tmp);
 }
 
 PVector Boid::Repulsion(Mat &DistMat, Array &Boids)
@@ -110,7 +121,7 @@ PVector Boid::Repulsion(Mat &DistMat, Array &Boids)
     for (int i = 0; i < N; i++)
     {
         double d = DistMat[id][i];
-        if (0 < d && d < radius)
+        if (0 < d && d < 10.0)
         {
             PVector tmp = Diff(pos, Boids[i].GetPos());
             rpl = Add(rpl, tmp);
@@ -123,17 +134,22 @@ PVector Boid::Repulsion(Mat &DistMat, Array &Boids)
 PVector Boid::Alignment(Mat &DistMat, Array &Boids)
 {
     int N = DistMat.size();
+    int cnt = 0;
     PVector ali = NullVector();
     for (int i = 0; i < N; i++)
     {
         double d = DistMat[id][i];
         if (0 < d && d < radius)
         {
+            cnt++;
             PVector tmp = Boids[i].GetDir();
             ali = Add(ali, tmp);
         }
     }
-    ali = Mult(ali, (1 / (N - 1)));
+    if (cnt != 0)
+    {
+        ali = Mult(ali, 1.0 / cnt);
+    }
     ali = Normalize(ali);
     PVector steer = Diff(ali, dir);
     return steer;
@@ -146,9 +162,9 @@ PVector Boid::Cohesion(Mat &DistMat, Array &Boids)
     for (int i = 0; i < N; i++)
     {
         double d = DistMat[id][i];
-        if (0 < d && d < radius)
+        if (0 < d && d < 30.0)
         {
-            PVector tmp = Diff(Boids[id].GetPos(), pos);
+            PVector tmp = Diff(Boids[i].GetPos(), pos);
             coh = Add(coh, tmp);
         }
     }
