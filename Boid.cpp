@@ -1,9 +1,20 @@
 #include "Boid.hpp"
 
 // Constructor
-Boid::Boid(int index)
+Boid::Boid(int index, Parameter &P)
 {
     id = index;
+
+    speed = P.Speed;
+    r_Rep = P.Radius_rep;
+    r_Ali = P.Radius_ali;
+    r_Coh = P.Radius_coh;
+
+    w_Rep = P.W_rep;
+    w_Ali = P.W_ali;
+    w_Coh = P.W_coh;
+
+    size = P.Size;
 }
 
 // Getters
@@ -25,11 +36,6 @@ double Boid::GetAngle()
 double Boid::GetSpeed()
 {
     return speed;
-}
-
-double Boid::GetRadius()
-{
-    return radius;
 }
 
 double Boid::GetSize()
@@ -73,11 +79,6 @@ void Boid::SetSpeed(double s)
     speed = s;
 }
 
-void Boid::SetRadius(double r)
-{
-    radius = r;
-}
-
 void Boid::SetSize(double s)
 {
     size = s;
@@ -97,13 +98,9 @@ void Boid::Update(Mat &DistMat, Array &Boids)
     PVector ali = Alignment(DistMat, Boids);
     PVector coh = Cohesion(DistMat, Boids);
 
-    // if (id == 0)
-    // {
-    //     cout << rpl.x << " " << rpl.y << endl;
-    //     cout << ali.x << " " << ali.y << endl;
-    //     cout << coh.x << " " << coh.y << endl;
-    //     cout << endl;
-    // }
+    rpl = Mult(rpl, w_Rep);
+    ali = Mult(ali, w_Ali);
+    coh = Mult(coh, w_Coh);
 
     new_dir = Add(dir, rpl);
     new_dir = Add(dir, ali);
@@ -116,14 +113,15 @@ void Boid::Update(Mat &DistMat, Array &Boids)
 
 PVector Boid::Repulsion(Mat &DistMat, Array &Boids)
 {
-    int N = DistMat.size();
+    int N = Boids.size();
     PVector rpl = NullVector();
     for (int i = 0; i < N; i++)
     {
         double d = DistMat[id][i];
-        if (0 < d && d < 10.0)
+        if (0 < d && d <= r_Rep)
         {
             PVector tmp = Diff(pos, Boids[i].GetPos());
+            tmp = Normalize(tmp);
             rpl = Add(rpl, tmp);
         }
     }
@@ -139,10 +137,11 @@ PVector Boid::Alignment(Mat &DistMat, Array &Boids)
     for (int i = 0; i < N; i++)
     {
         double d = DistMat[id][i];
-        if (0 < d && d < radius)
+        if (r_Rep < d && d <= r_Ali)
         {
             cnt++;
             PVector tmp = Boids[i].GetDir();
+            cout << tmp.x << "  " << tmp.y << endl;
             ali = Add(ali, tmp);
         }
     }
@@ -152,6 +151,7 @@ PVector Boid::Alignment(Mat &DistMat, Array &Boids)
     }
     ali = Normalize(ali);
     PVector steer = Diff(ali, dir);
+    steer = Normalize(steer);
     return steer;
 }
 
@@ -162,9 +162,10 @@ PVector Boid::Cohesion(Mat &DistMat, Array &Boids)
     for (int i = 0; i < N; i++)
     {
         double d = DistMat[id][i];
-        if (0 < d && d < 30.0)
+        if (r_Ali < d && d <= r_Coh)
         {
             PVector tmp = Diff(Boids[i].GetPos(), pos);
+            tmp = Normalize(tmp);
             coh = Add(coh, tmp);
         }
     }

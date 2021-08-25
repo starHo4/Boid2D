@@ -6,7 +6,7 @@ STD = -std=c++11
 all : boid2D clean
 
 boid2D : $(OBJS)
-	$(CC) -o boid2D $(OBJS) $(FRAMEWORK) $(STD)
+	$(CC) $(STD) -o boid2D $(OBJS) $(FRAMEWORK)
 main.o : main.cpp
 	$(CC) -c main.cpp
 Boid.o : Boid.hpp Boid.cpp

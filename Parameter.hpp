@@ -13,10 +13,12 @@ struct Parameter{
     static int N;
     static double Size;
     static double Speed;
-    static double Radius;
-    static double W_r;  // weight for repulsion
-    static double W_a;  // weight for cohesion
-    static double W_c;  // weight for alighment
+    static double Radius_rep;
+    static double Radius_ali;
+    static double Radius_coh;
+    static double W_rep;  // weight for repulsion
+    static double W_ali;  // weight for cohesion
+    static double W_coh;  // weight for alighment
 
     // For a drawing window
     static int window_width;

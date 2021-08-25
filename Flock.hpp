@@ -13,7 +13,7 @@ class Boid;
 
 typedef vector<Boid> Array;
 typedef Array::iterator Itr;
-typedef vector<vector<double>> Mat;
+typedef vector<vector<double> > Mat;
 
 class Flock
 {

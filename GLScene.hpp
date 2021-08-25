@@ -1,6 +1,8 @@
 #ifndef __GLScene__
 #define __GLScene__
 
+#define GL_SILENCE_DEPRECATION
+
 #include <iostream>
 #include <cmath>
 #include <GLUT/glut.h>
